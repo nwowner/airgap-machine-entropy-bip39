@@ -223,22 +223,22 @@
         </div>
     </div>
 
-    <div class="key-telemetry">
+        <div class="key-telemetry">
         <div class="telemetry-row">
             <div class="telemetry-label">🧬 Local Machine Hardware Entropy (XOR Layered Hex)</div>
-            <div class="telemetry-value" id="hexEntropyDisplay">0000000000000000000000000000000000000000000000000000000000000000</div>
+            <div class="telemetry-value"><span id="hexEntropyDisplay">0000000000000000000000000000000000000000000000000000000000000000</span></div>
         </div>
         <div class="telemetry-row">
             <div class="telemetry-label">🔑 Derived 512-bit Root Seed Hex (BIP-39 Pbkdf2 Signature)</div>
-            <div class="telemetry-value" id="rootSeedDisplay">Unlock entropy matrix to compile master signature path...</div>
+            <div class="telemetry-value"><span id="rootSeedDisplay">Unlock entropy matrix to compile master signature path...</span></div>
         </div>
         <div class="telemetry-row">
             <div class="telemetry-label">🏴 Master Private Key (Extended BIP-32 xprv Base string)</div>
-            <div class="telemetry-value" id="masterPrivDisplay">Awaiting master seed execution...</div>
+            <div class="telemetry-value"><span id="masterPrivDisplay">Awaiting master seed execution...</span></div>
         </div>
         <div class="telemetry-row">
             <div class="telemetry-label">👁️ Watch-Only Master Public Key (Extended BIP-32 xpub Base string)</div>
-            <div class="telemetry-value" id="masterPubDisplay">Awaiting master seed execution...</div>
+            <div class="telemetry-value"><span id="masterPubDisplay">Awaiting master seed execution...</span></div>
         </div>
     </div>
 
@@ -384,6 +384,7 @@ function renderScrambledKeyboard() {
 }
 // ⚙️ SECURE CLIPBOARD WIPER ENGINE
 function secureCopy(textToCopy) {
+    // Completely clear out any active wiping counters currently running in the background
     clearInterval(wiperInterval);
     clearTimeout(wiperTimeout);
 
@@ -401,14 +402,15 @@ function secureCopy(textToCopy) {
             if (timeLeft <= 0) clearInterval(wiperInterval);
         }, 1000);
 
+        // Wipe out the clipboard when the countdown hits zero
         wiperTimeout = setTimeout(() => {
             navigator.clipboard.writeText("").then(() => {
                 if (toast) toast.style.display = "none";
-                console.log("Memory purge: Clipboard data successfully wiped.");
+                console.log("Memory Purge: Clipboard successfully wiped.");
             });
         }, timeLeft * 1000);
     }).catch(err => {
-        alert("Clipboard access denied. Ensure browser permissions are enabled.");
+        alert("Clipboard access denied. Check your browser file security permissions.");
     });
 }
 
@@ -518,7 +520,7 @@ async function generateSeed() {
     document.getElementById("masterPubDisplay").innerText = "xpub" + base58Encode(mockPubPayload);
 }
 
-// --- AUTOMATIC COPY BUTTON INJECTION OBSERVER ---
+// --- FIX: UPGRADED COPY BUTTON INJECTION OBSERVER ---
 const observer = new MutationObserver(() => {
     const displays = [
         { id: "hexEntropyDisplay", label: "Entropy" },
@@ -529,15 +531,22 @@ const observer = new MutationObserver(() => {
 
     displays.forEach(item => {
         const el = document.getElementById(item.id);
-        const container = el ? el.parentElement : null;
-        if (el && container && el.innerText && !el.innerText.includes("Awaiting") && !el.innerText.includes("Unlock") && !container.querySelector(".copy-btn")) {
-            const rawText = el.innerText;
+        if (!el) return;
+        
+        const container = el.parentElement;
+        const text = el.innerText.trim();
+        
+        // Skip placeholders
+        if (text.includes("Awaiting") || text.includes("Unlock") || text === "") return;
+        
+        // Inject if data is compiled and copy button doesn't exist yet
+        if (container && !container.querySelector(".copy-btn")) {
             const btn = document.createElement("button");
             btn.className = "copy-btn";
-            btn.innerText = `Copy`;
+            btn.innerText = "Copy";
             btn.onclick = (e) => {
                 e.stopPropagation();
-                secureCopy(rawText);
+                secureCopy(text);
             };
             container.appendChild(btn);
         }
