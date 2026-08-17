@@ -1,42 +1,57 @@
-# ⚡ nwowner- airgap-machine-entropy-bip39
+# ⚡ nwowner-genesis // Sovereignty Engine
 
-CSPRNG goes brrr. 🚫🔌 `window.crypto` pulls raw machine entropy directly from your local hardware—not predictable math.
+> "CSPRNG goes brrr. 🚫🔌 `window.crypto` pulls raw machine entropy directly from your local hardware—not predictable math."
 
-The ultimate alternate-history BIP-39 key generator by **nwowner** (the name that *should* have been on the whitepaper but would have never been taken seriously). 
+The ultimate alternate-history BIP-39 key generator by **nwowner** (the name that *should* have been on the Bitcoin Whitepaper). 
 
-This is a zero-dependency, single-file HTML application built for maximum privacy, sovereign self-custody, and true air-gapped execution. It maps 128/256 bits of hardware-harvested entropy into cryptographically secure 12 or 24-word seed phrases following the exact Bitcoin BIP-39 protocol standard.
+This is a zero-dependency, single-file HTML application built for maximum privacy, anti-keylogger protection, and true air-gapped execution. It maps 128/256 bits of hardware-harvested machine entropy into cryptographically secure 12 or 24-word seed phrases following the exact Bitcoin BIP-39 protocol standard.
 
 ---
 
-## 🔒 Security Architecture
+## 🔒 Advanced Security Architecture
 
-1. **Hardware-Driven Randomness:** Uses native `window.crypto.getRandomValues()` to harvest entropy directly from your system's hardware state. It layers this with a real-time mouse-movement pooling mechanism to inject additional chaotic machine entropy.
-2. **Zero Network Exposure:** No external CDNs. No Google Analytics. No third-party Javascript packages. Everything—from CSS layouts to the cryptographic hashing engine—is self-contained in a single file.
-3. **Environment Threat Monitor:** Built-in proactive scanning that inspects network status, checks window dimensions for malicious background mirroring/recording, monitors script load origins, and warns you if the browser detects a non-air-gapped environment.
+1. **Expanded Sandbox Coordinate Area:** The entropy-harvesting playground features an expanded 280px canvas container. Sweeping your mouse inside this grid injects high-resolution human micro-movement timing noise over the machine's underlying CSPRNG hooks.
+2. **Anti-Keylogger Matrix Keyboard:** Includes a randomized virtual input engine utilizing a Fisher-Yates shuffle algorithm. Keys scramble dynamically on every single click, entirely bypassing hardware or software keyloggers monitoring your operating system keyboard input layout.
+3. **BIP-39 Passphrase Support:** Full deployment for the optional "25th word" passphrase layer, creating a hidden, custom wallet matrix side-by-side with your standard seed phrase.
+
+---
+
+## 🛠️ The Cryptographic Telemetry Drawer: Verified Offline
+
+In Bitcoin, the motto is **"Don't Trust, Verify."** These four live-rendered cryptographic parameters serve as your local proof of mathematical honesty.
+
+### 🧬 1. Local Machine Hardware Entropy (XOR Layered Hex)
+* **What it is:** A direct window into your machine's physical hardware state combined with your unique mouse movement timing pixels.
+* **Why it matters:** If this hex ever looks identical or follows a predictable pattern when refreshing, the system is rigged. It must be mathematically unique every time.
+
+### 🔑 2. Derived 512-bit Root Seed Hex (BIP-39 Pbkdf2 Signature)
+* **What it is:** The mathematical master key stretching your written English words and your passphrase together using a local PBKDF2-SHA512 hashing layer.
+* **Why it matters:** This proves your local code executed the exact protocol standard. You can test your words in an independent offline calculator (like Ian Coleman's tool) and it will render this identical master hex.
+
+### 🏴 3. Master Private Key (`xprv`) & Watch-Only Public Key (`xpub`)
+* **What it is:** The Hierarchical Deterministic (HD) root key strings used to derive all subsequent Bitcoin addresses and child keys.
+* **Why it matters:** These strings are fully unlocked using an embedded, standalone cryptographic calculation script. They display instantly on **any device or web browser**, even when opened as a completely isolated raw local file (`file://`) with zero internet.
 
 ---
 
 ## 🚀 How to Execute Like a Sovereign Pleb
 
-While this tool can be hosted on GitHub Pages for distribution convenience, **NEVER generate production keys on a machine actively connected to the internet.** 
+Never generate production-grade keys while actively connected to the internet. Follow the proper air-gap protocol:
 
-Follow the proper air-gap protocol:
-
-1. **Download:** Save the `index.html` file from this repository onto a clean, empty USB flash drive.
-2. **Isolate:** Boot an isolated computer, prefer using an ephemeral live operating system (like Tails OS or a fresh Ubuntu live USB). 
-3. **Disconnect:** Physically pull out your Wi-Fi cards, disconnect Ethernet cables, and turn off Bluetooth.
-4. **Run:** Insert your USB drive, open the local `index.html` file inside an open-source browser (Firefox/Chromium), pass the Environment Checks, and generate your keys.
-5. **Secure:** Physically write your words down on paper or stamp them into steel. Do not take photos or save screenshots. Back in the day I used a Polaroid camera, but those are probably extinct now. 
+1. **Download:** Save your single `index.html` file onto a clean, empty USB flash drive.
+2. **Isolate:** Boot an isolated computer using an ephemeral live operating system (like Tails OS). 
+3. **Disconnect:** Physically pull out your Wi-Fi cards, disconnect Ethernet cables, and turn off all network interfaces entirely.
+4. **Run:** Open the local `index.html` file inside an open-source browser, fill the entropy canvas, select your passphrase variables, and generate your keys.
+5. **Secure:** Physically write your words down on paper or stamp them into steel. Do not take photos, screenshots, or cloud backups.
 
 ---
 
-## 🛠️ Verification & Math
+## 📲 How to Use Your Generated Wallet
 
-The internal SHA-256 integrity check allows you to verify that the code running in your browser matches the raw cryptographic hash of the source code file. 
+Your generator creates a standard, universally recognized **BIP-39 mnemonic phrase**. To load it into an everyday device:
 
-* **Protocol Alignment:** BIP-0039 standard compliant
-* **Entropy Engine:** CSPRNG + Mouse Hardware Seed Mixer
-* **KDF / Hashing Layer:** Native Web Cryptography API (`SubtleCrypto`)
+* **Hardware Wallets (Recommended):** Open your device (Jade, Coldcard, BitBox02, Trezor), select "Import/Restore Wallet", and enter your 12/24 words.
+* **Mobile/Desktop Wallets:** Load open-source software (BlueWallet, Electrum, Sparrow), select "Import from Seed", and type your phrase.
+* **Crucial Setting:** If you enabled the optional **25th-word passphrase** in your generator, you must toggle "Passphrase support" or "BIP-39 Passphrase" in your wallet software and type it in there, or you will open a completely different, empty wallet profile.
 
-*Made by NWOwner. Your hardware, your sovereign wealth.*
-
+*Made by nwowner. Your hardware, your sovereign wealth.*
